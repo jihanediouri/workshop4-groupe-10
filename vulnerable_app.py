@@ -4,7 +4,17 @@ import hashlib
 from flask import Flask, request, make_response
 
 app = Flask(__name__)
-
+@app.route("/")
+def index():
+    return """
+    <h1>Vulnerable App - ZAP Target</h1>
+    <ul>
+        <li><a href="/user?username=admin">Test SQL Injection</a></li>
+        <li><a href="/ping?ip=127.0.0.1">Test Command Injection</a></li>
+        <li><a href="/hello?name=ZAP">Test XSS</a></li>
+        <li><a href="/calc?expr=1%2B1">Test Eval</a></li>
+    </ul>
+    """
 # 1. MAUVAISE PRATIQUE : Secret / Mot de passe en dur
 DB_PASSWORD = "SuperSecretAdminPassword123!"
 
