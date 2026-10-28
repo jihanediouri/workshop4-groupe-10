@@ -21,6 +21,10 @@ Pour ce workshop, nous utilisons une application Flask délibérément vulnérab
    ```
    L'application est maintenant accessible sur `http://localhost:5000`.
 
+![Build Docker](screenshots/section2-1.png)
+![Lancement Conteneur](screenshots/section2-2.png)
+![Accès Application](screenshots/section2-3.png)
+
 ## 3. Scan Baseline (Passif)
 Le scan baseline effectue une exploration passive de l'application pour détecter des problèmes de configuration, des headers manquants ou des cookies non sécurisés.
 
@@ -40,10 +44,17 @@ docker run --rm -v ${PWD}:/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-bas
 ```
 *Note : Sur Windows/Mac, utilisez `host.docker.internal` pour pointer vers votre machine hôte depuis le conteneur Docker.*
 
+![Exécution ZAP Baseline 1](screenshots/section3-1.png)
+![Exécution ZAP Baseline 2](screenshots/section3-2.png)
+![Exécution ZAP Baseline 3](screenshots/section3-3.png)
+
 ### Observations attendues :
 - Analyse du rapport `zap_report.html`.
 - Identification des cookies sans attribut `HttpOnly` ou `Secure`.
 - Identification des headers de sécurité manquants (ex: `X-Frame-Options`, `Content-Security-Policy`).
+
+![Rapport Baseline 1](screenshots/section3-4.png)
+![Rapport Baseline 2](screenshots/section3-5.png)
 
 ## 4. Scan Actif (Pentest Automatisé)
 Le scan actif tente d'attaquer l'application en envoyant des payloads pour détecter des failles réelles comme l'Injection SQL ou le XSS. **À ne faire que sur des environnements de test.**
@@ -63,11 +74,16 @@ docker run --rm -v ${PWD}:/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-ful
     -r zap_full_report.html
 ```
 
+![Exécution Scan Actif 1](screenshots/section4-1.png)
+![Exécution Scan Actif 2](screenshots/section4-2.png)
+
 ### Résultats détectés sur `vulnerable_app.py` :
 ZAP devrait détecter automatiquement :
 - **Cross-Site Scripting (XSS)** sur la route `/hello?name=...`.
 - **SQL Injection** sur la route `/user?username=...`.
 - **Command Injection** possible sur `/ping?ip=...`.
+
+![Résultats Scan Actif](screenshots/section4-3.png)
 
 ## 5. Intégration dans un pipeline CI/CD
 Pour automatiser le DAST, ZAP peut être intégré dans GitHub Actions ou GitLab CI :
