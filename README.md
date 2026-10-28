@@ -1,5 +1,6 @@
 # Workshop 4 : Tests de Sécurité Dynamiques (DAST) et Pentest Automatisé
-
+**Groupe :** 10
+**Membres :** Zakaria Aribi , Zakaria Mouada , Jihane Diouri
 ## Objectif
 Découvrir et utiliser **OWASP ZAP** pour identifier les failles de sécurité d'une application web en cours d'exécution. Ce workshop complète les analyses statiques (SAST) vues dans les workshops précédents en testant l'application d'un point de vue extérieur.
 
